@@ -10,6 +10,10 @@ public:
     explicit BallAnimation(QWidget *parent = nullptr);
     void setOrigin(const QPoint& origin);
     void addToOrigin(const QPoint&point);
+    QPoint getOrigin();
+    bool touchingBorderx();
+    bool touchingBordery();
+
 
 signals:
 

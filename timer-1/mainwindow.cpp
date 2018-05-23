@@ -68,10 +68,21 @@ void MainWindow::toggle_it(bool toggled,int button,int led_pin)
 void MainWindow::readData()
 {
     static int count=0;
+    static int directionx = 1;
+    static int directiony = 1;
     //const QByteArray data = m_serial->readAll();
     //m_buffer = QString("%1" ).arg( QDateTime::currentDateTime().toTime_t() );
     //processMessage(m_buffer);
-    banimate->addToOrigin(QPoint(1,1));
+    if (banimate->touchingBorderx())
+    {
+        directionx = -(directionx);
+    }
+
+    if (banimate->touchingBordery())
+    {
+        directiony = -(directiony);
+    }
+    banimate->addToOrigin(QPoint(directionx,directiony));
     banimate->repaint();
     processMessage(QString("%1 %2").arg(count).arg(QDateTime::currentDateTime().toTime_t()));
     count++;
