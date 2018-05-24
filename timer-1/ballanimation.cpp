@@ -2,11 +2,20 @@
 #include <QPaintEvent>
 #include <QPainter>
 #include <QDebug>
+#include <cmath>
+#include <ctime>
 BallAnimation::BallAnimation(QWidget *parent) : QWidget(parent),
     m_origin(QPoint(50,50))
 {
     setFixedSize(100,100);
-    // setGeometry(0,0,100,100);
+    m_size_x = 10;
+    m_size_y = 10;
+    srand(time(NULL));
+    do
+    {
+        directionx = (rand() % 3);
+        directiony = (rand() % 3);
+    } while (directionx == 0 && directiony == 0);
 }
 
 void BallAnimation::setOrigin(const QPoint &origin)
@@ -24,13 +33,13 @@ QPoint BallAnimation::getOrigin()
     return m_origin;
 }
 
-bool BallAnimation::touchingBorderx()
+bool BallAnimation::touchingBorderX()
 {
-   if (m_origin.x() + 10 >= width())
+   if (m_origin.x() + m_size_x >= width())
    {
        return true;
    }
-   else if (m_origin.x() - 10 <= 0)
+   else if (m_origin.x() - m_size_x <= 0)
    {
        return true;
    }
@@ -40,13 +49,13 @@ bool BallAnimation::touchingBorderx()
    }
 }
 
-bool BallAnimation::touchingBordery()
+bool BallAnimation::touchingBorderY()
 {
-   if (m_origin.y() + 10 >= height())
+   if (m_origin.y() + m_size_y >= height())
    {
        return true;
    }
-   else if (m_origin.y() - 10 <= 0)
+   else if (m_origin.y() - m_size_y <= 0)
    {
        return true;
    }
@@ -55,6 +64,26 @@ bool BallAnimation::touchingBordery()
        return false;
    }
 
+}
+
+void BallAnimation::setDirectionX(int x)
+{
+    directionx = x;
+}
+
+void BallAnimation::setDirectionY(int y)
+{
+    directiony = y;
+}
+
+int BallAnimation::getDirectionX()
+{
+    return directionx;
+}
+
+int BallAnimation::getDirectionY()
+{
+   return directiony;
 }
 
 void BallAnimation::paintEvent(QPaintEvent *event)
@@ -63,10 +92,38 @@ void BallAnimation::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     painter.drawRect(QRect(0,0,width(),height()));
     painter.setBrush(Qt::blue);
-    painter.setPen(Qt::red);
-    painter.drawEllipse(m_origin,10,10);
-    //painter.drawRect(QRect(0,0,width()-1,height()-1));
-    //painter.drawLine(QPoint(0,0),QPoint(50,50));
-
-
+    painter.setPen(Qt::black);
+    if (touchingBorderX() || touchingBorderY())
+    {
+        bool painted = false;
+        if (touchingBorderX())
+        {
+            if (directionx < 1)
+            {
+                painter.drawEllipse(m_origin-QPoint(m_size_x/2,0),m_size_x/2,m_size_y+(m_size_x/2));
+            }
+            else
+            {
+                painter.drawEllipse(m_origin+QPoint(m_size_x/2,0),m_size_x/2,m_size_y+(m_size_x/2));
+            }
+            setDirectionX(-(directionx));
+            painted = true;
+        }
+        if (touchingBorderY())
+        {
+            if (directiony < 1 && !painted)
+            {
+                painter.drawEllipse(m_origin-QPoint(0,m_size_y/2),m_size_x+(m_size_y/2),m_size_y/2);
+            }
+            else if (!painted)
+            {
+                painter.drawEllipse(m_origin+QPoint(0,m_size_y/2),m_size_x+(m_size_y/2),m_size_y/2);
+            }
+            setDirectionY(-(directiony));
+        }
+    }
+    else
+    {
+        painter.drawEllipse(m_origin,m_size_x,m_size_y);
+    }
 }
