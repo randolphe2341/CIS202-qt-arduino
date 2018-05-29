@@ -1,3 +1,12 @@
+/**************************************************************************
+
+  Name: mainwindow.h
+  Description: This is the MainWindow class, which will create a GUI window for the user.
+  Author: Ethan Randolph
+  Email: randolphe@student.vvc.edu
+  Created: May 29, 2018
+
+**************************************************************************/
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 // https://doc.qt.io/qt-5/qtimer.html

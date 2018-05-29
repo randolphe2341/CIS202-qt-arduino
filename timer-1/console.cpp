@@ -1,5 +1,13 @@
-#include "console.h"
+/**************************************************************************
 
+  Name: console.cpp
+  Description: This is the implementation of the Console class.
+  Author: Ethan Randolph
+  Email: randolphe@student.vvc.edu
+  Created: May 29, 2018
+
+**************************************************************************/
+#include "console.h"
 #include <QKeyEvent>
 #include <QScrollBar>
 

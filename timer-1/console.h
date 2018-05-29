@@ -1,3 +1,13 @@
+/**************************************************************************
+
+  Name: console.h
+  Description: This is the header file for Console, which will display the number of frames
+  that have occurred within the program.
+  Author: Ethan Randolph
+  Email: randolphe@student.vvc.edu
+  Created: May 29, 2018
+
+**************************************************************************/
 #ifndef CONSOLE_H
 #define CONSOLE_H
 

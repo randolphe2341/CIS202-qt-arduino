@@ -1,9 +1,20 @@
+/**************************************************************************
+
+  Name: ballanimation.cpp
+  Description: This is the implementation of the BallAnimation class.
+  Author: Ethan Randolph
+  Email: randolphe@student.vvc.edu
+  Created: May 29, 2018
+
+**************************************************************************/
 #include "ballanimation.h"
 #include <QPaintEvent>
 #include <QPainter>
 #include <QDebug>
 #include <cmath>
 #include <ctime>
+
+//All function descriptions are in the header file.
 BallAnimation::BallAnimation(QWidget *parent) : QWidget(parent),
     m_origin(QPoint(50,50))
 {
@@ -13,9 +24,9 @@ BallAnimation::BallAnimation(QWidget *parent) : QWidget(parent),
     srand(time(NULL));
     do
     {
-        directionx = (rand() % 3);
-        directiony = (rand() % 3);
-    } while (directionx == 0 && directiony == 0);
+        m_directionx = (rand() % 3);
+        m_directiony = (rand() % 3);
+    } while (m_directionx == 0 && m_directiony == 0);
 }
 
 void BallAnimation::setOrigin(const QPoint &origin)
@@ -68,22 +79,22 @@ bool BallAnimation::touchingBorderY()
 
 void BallAnimation::setDirectionX(int x)
 {
-    directionx = x;
+    m_directionx = x;
 }
 
 void BallAnimation::setDirectionY(int y)
 {
-    directiony = y;
+    m_directiony = y;
 }
 
 int BallAnimation::getDirectionX()
 {
-    return directionx;
+    return m_directionx;
 }
 
 int BallAnimation::getDirectionY()
 {
-   return directiony;
+   return m_directiony;
 }
 
 void BallAnimation::paintEvent(QPaintEvent *event)
@@ -98,7 +109,7 @@ void BallAnimation::paintEvent(QPaintEvent *event)
         bool painted = false;
         if (touchingBorderX())
         {
-            if (directionx < 1)
+            if (m_directionx < 1)
             {
                 painter.drawEllipse(m_origin-QPoint(m_size_x/2,0),m_size_x/2,m_size_y+(m_size_x/2));
             }
@@ -106,12 +117,12 @@ void BallAnimation::paintEvent(QPaintEvent *event)
             {
                 painter.drawEllipse(m_origin+QPoint(m_size_x/2,0),m_size_x/2,m_size_y+(m_size_x/2));
             }
-            setDirectionX(-(directionx));
+            setDirectionX(-(m_directionx));
             painted = true;
         }
         if (touchingBorderY())
         {
-            if (directiony < 1 && !painted)
+            if (m_directiony < 1 && !painted)
             {
                 painter.drawEllipse(m_origin-QPoint(0,m_size_y/2),m_size_x+(m_size_y/2),m_size_y/2);
             }
@@ -119,7 +130,7 @@ void BallAnimation::paintEvent(QPaintEvent *event)
             {
                 painter.drawEllipse(m_origin+QPoint(0,m_size_y/2),m_size_x+(m_size_y/2),m_size_y/2);
             }
-            setDirectionY(-(directiony));
+            setDirectionY(-(m_directiony));
         }
     }
     else

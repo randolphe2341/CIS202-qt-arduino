@@ -1,3 +1,12 @@
+/**************************************************************************
+
+  Name: mainwindow.cpp
+  Description: This is the implementation of MainWindow.
+  Author: Ethan Randolph
+  Email: randolphe@student.vvc.edu
+  Created: May 29, 2018
+
+**************************************************************************/
 #include "mainwindow.h"
 #include "console.h"
 #include <QDebug>
